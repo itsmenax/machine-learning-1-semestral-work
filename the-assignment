@@ -1,0 +1,132 @@
+# Assignment
+Team case study on machine learning 
+
+Dataset choice 
+Choose a suitable public dataset for the classification task. The target in the input data can be categorical (or a number interpreted as a category), but you will need to transform this into a category later. You can also choose a dataset with a continuous target if you will the target to a binary attribute as part of preprocessing. Recommended sources for datasets:
+-	https://www.openml.org/
+-	https://kaggle.com/ 
+
+Software choice
+It is recommended to use Python (scikit-learn).
+
+Task customization
+Please select:
+1.	Target attribute
+2.	One instance of interest (you can do it randomly, but do not have to), which will be analysed later.   The instance can be identified, for example, by an id.
+3.	Choose an attribute of interest (ideally one that can be influenced for the given instance, for example, ticket class, not age) 
+4.	A subset of rows of interest, this will be most likely identified by a combination of attribute and value.
+5.	Cost matrix consisting of a “cost of a false positive, false negative, true positive and true negative”. Alternatively, you can also define the cost matrix in terms of benefits.
+
+The report will have the following structure:
+Introduction
+1.	Data preprocessing
+2.	Modelling
+3.	Model evaluation
+4.	Explanation
+Conclusion
+
+
+Requirements and content:
+
+Introduction
+1.	Describe the business value of addressing this problem with machine learning. 
+2.	Provide the link to the source of the data. 
+3.	Describe chosen customization: target attribute, an instance of interest, attribute of interest, subset of interest, cost matrix.
+Example: if you would use a dataset about air tickets, the target attribute may be the Airport travelled to. You will also explain that the Airport will be binarized into EU Airport (positive) or Non-EU Airport (negative). An instance of interest could be a particular passenger with id=10. The attribute of interest could be the passenger class. The subset of interest could be passengers who travelled in the first class. The cost matrix could be given by providing the cost of a true positive (1), true negative (1), false positive (2) and false negative (3). This will express that the highest cost will be incurred when the classifier predicts a non-EU Airport but the actual airport will be an EU Airport. 
+
+
+Data Exploration
+1.	Show a histogram (or a table with value frequencies) for the target variable and for selected other variables
+2.	Show a scatterplot (correlation plot) showing the relation between selected predictors and the target variable
+3.	Interpret the results
+
+
+Data preprocessing
+Carefully describe the preprocessing in the report. You need to define the following subsections:
+
+1.	Preprocessing for supervised machine learning 
+i.	Derive binary target attribute:  The team needs to convert the target attribute to a binary transformed target attribute by choosing which value(s) will be positive and which value(s) will be negative value.
+o	For example, the target attribute can be „Airport“. The team decided to create a new attribute “EUAirport”, which will be set to “0” if “Airport is set to BRS (Bristol), LHR (London Heathrow) or LCY  (London City) and to “1” otherwise. Remove the original target attribute. In our example, this will be “Airport”.
+ii.	Split the data into a training set and a test set. It is up to you what percentage will be used for training but the training set needs to be larger than the test set.
+iii.	Do at least one additional data preprocessing, such as
+-	Remove missing values
+-	If the classes are imbalanced, you may upsample (or downsample) the training dataset.
+-	Normalize values or use a standard scale 
+-	Remove rows based on subsetting
+-	Derive new columns
+-	Perform feature selection (remove some attributes)
+-	Important: Make sure that your preprocessing operation does not use information from the test set. It is therefore recommended to “fit” preprocessing on the training set and then apply it on the test set.
+(tip: see Preprocessing Data With SCIKIT-LEARN (Python tutorial) - JC Chouinard)
+
+2.	Preprocessing for unsupervised models (clustering)
+i.	The clustering will be performed only on the chosen subset of data. As part of preprocessing, you need to delete the rows not in the subgroup.
+ii.	For clustering, it is recommended to perform feature rescaling and or normalization.
+
+
+Modeling
+Carefully describe all parameters used in the report:
+
+1.	Supervised model that predicts the target attribute. 
+a.	Train the model on training data, and evaluate the model on test data. 
+b.	Try at least two machine learning algorithms. It is recommended to try Decision Trees and Forests. 
+c.	Try various combinations of metaparameters (such as tree depth for decision tree or number of trees in a forest) and record the impact on predictive performance
+d.	Try a baseline model (e.g., random classifier)
+
+2.	Clustering model for the chosen subset of the data.
+a.	Experiment with different clustering setups. 
+b.	Use at least two types of clustering algorithms (e.g., flat and hierarchical clustering). 
+c.	Try various metaparameter settings (e.g., number of clusters for k-means) and choose the most suitable value. 
+
+
+Evaluation
+
+1.	Supervised model
+a.	Which metric is most suitable for use for the current problem (accuracy, F-measure)?
+b.	Compare the performance metrics for all types of models (e.g,. decision tree and forest). Which model is the best one?
+c.	Combine (multiply) the predefined costs matrix with the values in the confusion matrix for each model. Which model is the best one? 
+d.	If you would change the probability (score) threshold for classification, would you obtain better results in terms of total costs? For which threshold? (optional) 
+e.	Quantify the effect of individual preprocessing steps (such as rescaling). How would the performance change if you have not performed this step (optional).
+
+2.	Unsupervised model (clustering)
+a.	Justify the chosen k using the elbow curve graph (WCSS value comparison). 
+b.	Evaluate the quality of clustering. 
+
+
+Explanation
+
+1.	Supervised models
+a.	Identify the most important variables in the model. 
+i.	Explain how the decision tree model reached its conclusion (which branches of the tree/decision nodes were activated). 
+b.	Use both models to classify the chosen instance 
+i.	Do both models assign the same class?
+ii.	What is the confidence (probability) of the prediction?
+c.	If you would change the value of the attribute of interest, how would the classification of the instance change? In scikit-learn, you can use the ICE plot (optional).
+d.	Apply LIME, SHAPLEY or Anchors to explain the classification of the instance. (optional, only Python)
+
+2.	Unsupervised model (clustering)
+a.	Interpret the final clusters based on their centroids and the number of instances in each cluster.
+b.	Use the model to classify the chosen instance into a cluster
+i.	Inspect the assigned cluster. 
+ii.	Does the value of the target class in the data match with the mode (average) of the assigned cluster? (optional)
+
+
+Conclusion
+Summarize the results, answering questions such as:
+1.	Which machine learning result has the highest value and is most interesting? 
+2.	What setting provided the best result? 
+3.	Which attributes are the most important?
+
+
+Submission:
+-	Submit a ipynb and a html file with the report. You can also split the submission into several files with clearly chosen names indicating what part of the report the file relates to.
+-	Submit datasets after preprocessing (three datasets: train, test, for clustering) or a link to the dataset.
+
+Final checklist
+-	Are all preprocessing steps justified?
+-	Did you try different metaparameter values where appropriate?
+-	Are the results replicable? If you have the same data, does the report describe all steps in sufficient detail to obtain the same results as reported by the authors?
+-	Were proper evaluation metrics selected? Are the results correctly interpreted?
+-	Are all important steps explained and justified?
+-	What is the quality of writing? Is the language clear and concise?
+
+V2024.19.2
